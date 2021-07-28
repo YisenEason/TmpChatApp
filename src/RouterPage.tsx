@@ -1,12 +1,13 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer, ParamListBase, RouteProp } from "@react-navigation/native";
+import { NavigationContainer, NavigationContainerRef, ParamListBase, RouteProp } from "@react-navigation/native";
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack";
-import React from "react";
+import React, { RefObject } from "react";
 import { Platform, Text, View } from "react-native";
 import { Lightbox, Router, Scene } from "react-native-router-flux";
 import Icon from 'react-native-vector-icons/Ionicons';
 import LoadingModal from "./component/modal/LoadingModal";
 import AddressListPage from "./component/page/AddressListPage";
+import ChangePwd from "./component/page/ChangePwd";
 import ChatListPage from "./component/page/ChatListPage";
 import FirstPage from "./component/page/FirstPage";
 import ForgetPwd from "./component/page/ForgetPwd";
@@ -23,7 +24,7 @@ const NotModalStack = createStackNavigator();
 function ChatTabScreen() {
   return (
     <MainStack.Navigator>
-      <MainStack.Screen name="ChatListPage" component={FirstPage} />
+      <MainStack.Screen name="ChatListPage" component={ChatListPage} />
     </MainStack.Navigator>
   );
 }
@@ -73,15 +74,18 @@ function NotModalScrren() {
       <NotModalStack.Screen name="UserInfo" component={UserInfo}></NotModalStack.Screen>
       <NotModalStack.Screen name="LoginPage" component={LoginPage}></NotModalStack.Screen>
       <NotModalStack.Screen name="ForgetPwd" component={ForgetPwd}></NotModalStack.Screen>
+      <NotModalStack.Screen name="ChangePwd" component={ChangePwd} options={{title: '重置密码'}}></NotModalStack.Screen>
     </NotModalStack.Navigator>
   );
 }
+
+export let rootNavRef: NavigationContainerRef | null;
 
 export default class RouterPage extends React.Component {
   render () {
     
     return (
-      <NavigationContainer>
+      <NavigationContainer ref={(ref)=>{rootNavRef=ref}}>
         <RootStack.Navigator initialRouteName="NotModalScrren" mode='modal'>
           {/* Screen */}
           <RootStack.Screen name="NotModalScrren" component={NotModalScrren} options={{headerShown: false}} />

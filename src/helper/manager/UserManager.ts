@@ -1,12 +1,19 @@
+import User from "../../dto/User";
+import { refreshUserInfoAction } from "../../redux/actions/UserActions";
+import { appDispatch } from "../../redux/Store";
 
 
 class UserManager {
-  username: String;
-  password: String;
+
+  user?: User;
   
   constructor() {
-    this.username = '';
-    this.password = '';
+
+  }
+
+  saveUser(user:User) {
+    this.user = user;
+    appDispatch(refreshUserInfoAction(this.user));
   }
 }
 

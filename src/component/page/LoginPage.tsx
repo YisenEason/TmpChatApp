@@ -9,8 +9,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { StackNavigationOptions } from "@react-navigation/stack";
 import Color from "../../constant/Color";
 import { sp } from "../../helper/utils/ScreenUtil";
+import userManager from "../../helper/manager/UserManager";
 
-export default class LoginPage extends BasePage<{}> {
+type Props = {
+}
+
+class LoginPage extends BasePage<Props> {
 
   username: String = '';
   password: String = '';
@@ -45,6 +49,12 @@ export default class LoginPage extends BasePage<{}> {
       this.setState({
         isLoading: false
       })
+      userManager.saveUser({
+        username: 'abc',
+        nickname: 'ccc',
+        number: 'ab12323cc',
+        avatar: 'http://m.imeitou.com/uploads/allimg/2021060310/yiuviwkiqho-lp.jpg'
+      });
     }, 1000);
   }
 
@@ -69,9 +79,7 @@ export default class LoginPage extends BasePage<{}> {
   }
 
   render() {
-    console.log(this.props);
 
-    const { addAction } = this.props;
     const { isLoading, allowSubmit } = this.state;
 
     return (
@@ -113,3 +121,5 @@ export default class LoginPage extends BasePage<{}> {
   }
 
 }
+
+export default LoginPage;

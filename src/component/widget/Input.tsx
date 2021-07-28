@@ -10,8 +10,6 @@ type Props = {
 }
 
 const Input: React.FC<Props & TextInputProps> = (props) => {
-
-  console.log('aaa');
   
   const [ hidePassword, setHidePassword ] = useState(true);
 
@@ -25,11 +23,11 @@ const Input: React.FC<Props & TextInputProps> = (props) => {
           <TouchableOpacity style={{right: 0, paddingHorizontal: 10}} onPress={()=>{
             setHidePassword(!hidePassword);
           }}>
-            <Icon name={hidePassword ? 'eye-outline' : 'eye-off-outline'} size={25}/>
+            <Icon name={hidePassword ? 'eye-outline' : 'eye-off-outline'} size={18} color={Color._b4bbc3}/>
           </TouchableOpacity>
         }
       </View>
-      <View style={{height: 0.5, width: '100%', backgroundColor: Color._000000}}/>
+      <View style={{height: 0.5, width: '100%', backgroundColor: Color._000000, position: 'absolute', bottom: 0}}/>
     </View>
   )
 }

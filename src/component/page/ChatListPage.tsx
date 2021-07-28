@@ -1,12 +1,15 @@
 
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { globalStyles } from '../../constant/Styles';
-import WebSocketClient from '../../helper/manager/WebSocketClient';
 import StatuBar from '../widget/StatuBar';
 import BasePage from './BasePage';
+import { refreshUserInfoAction } from '../../redux/actions/UserActions';
+import userManager from '../../helper/manager/UserManager';
 
-export default class ChatListPage extends BasePage<{}> {
+class ChatListPage extends BasePage<{}> {
 
   constructor(props:any) {
     super(props);
@@ -19,8 +22,10 @@ export default class ChatListPage extends BasePage<{}> {
     return (
       <View style={globalStyles.container}>
         <StatuBar />
-        <Text>列表</Text>
+        <Text>列表sdfsfs</Text>
       </View>
     );
   }
 }
+
+export default ChatListPage;

@@ -18,9 +18,9 @@ export default class BasePage<P> extends React.Component<P & BaseProps> {
   constructor(props: any) {
     super(props);
 
-    this.props.navigation.addListener('focus', ()=>{
-      console.log('聚焦页面：', this.props.route.name);
-    })
+    // this.props.navigation.addListener('focus', ()=>{
+    //   console.log('聚焦页面：', this.props.route.name);
+    // })
 
     this.props.navigation.setOptions(this.baseNavigationOptions)
 

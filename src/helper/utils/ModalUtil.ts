@@ -1,9 +1,31 @@
-import { Actions } from "react-native-router-flux";
+import { Alert } from "react-native";
+import { rootNavRef } from "../../RouterPage";
 
-function loadingModal(msg?: string) {
-  Actions.LoadingModal({title: msg});
+function showConfirmModal(title: string, msg: string, comfirmHandle: ()=>void) {
+  Alert.alert(title, msg, [{
+    text: '取消',
+    onPress:()=>{
+      console.log('取消');
+      
+    }},{
+    text: '确认',
+    onPress:()=>{
+      console.log('确认');
+      comfirmHandle();
+    }
+  }])
 }
 
-export default {
-  loadingModal
+function showLoading() {
+  rootNavRef?.navigate('LoadingModal');
+}
+
+function hideLoading() {
+  rootNavRef?.navigate('NotModalScrren')
+}
+
+export {
+  showConfirmModal,
+  showLoading,
+  hideLoading
 };
