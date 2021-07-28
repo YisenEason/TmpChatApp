@@ -18,10 +18,12 @@ const Color = {
   _000000: '#000000',
   _fffefa: '#fffefa',
   white: '#fff',
+  _2481ff: '#2481FF',
 
   default_backgroundColor: '#ededed',
   default_fontColor: '#22254c',
-  default_divisionColor: '#E6ECE9'
+  default_divisionColor: '#E6ECE9',
+  default_actionColor: '#2481FF'
 }
 
 export default Color;

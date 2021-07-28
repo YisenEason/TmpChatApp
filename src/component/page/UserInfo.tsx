@@ -1,6 +1,6 @@
 import { StackNavigationOptions } from '@react-navigation/stack';
 import React, { FC } from 'react';
-import { Alert, Button, Image, Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Alert, Button, Image, Text, TouchableOpacity, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect, createSelectorHook, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -29,6 +29,14 @@ class UserInfo extends BasePage<{}> {
     this.props.navigation.navigate("ChangePwd");
   }
 
+  gotoAdvicePage() {
+    this.props.navigation.navigate("AdvicePage");
+  }
+
+  gotoEditPage() {
+    this.props.navigation.navigate("EditUserInfo");
+  }
+
   render () {
     console.log('render UserInfo');
     
@@ -36,12 +44,16 @@ class UserInfo extends BasePage<{}> {
       <View style={globalStyles.container}>
         <StatuBar />
 
-        <TopUserView />
+        <TopUserView onPress={()=>{
+          this.gotoEditPage();
+        }}/>
 
         <ProfileItem style={{marginTop: 20}} icon="lock-closed-outline" title="重置密码" onPress={()=>{
           this.gotoChangePwdPage();
         }} />
-        <ProfileItem style={{marginTop: 0}} icon='create-outline' title="建议与反馈" onPress={()=>{}} />
+        <ProfileItem style={{marginTop: 0}} icon='create-outline' title="建议与反馈" onPress={()=>{
+          this.gotoAdvicePage();
+        }} />
         <ProfileItem style={{marginTop: 0}} icon='exit-outline' title="退出登录" onPress={()=>{
           showConfirmModal('确认退出?', '', ()=>{
             this.props.navigation.replace('LoginPage');
@@ -55,18 +67,22 @@ class UserInfo extends BasePage<{}> {
 export default UserInfo;
 
 
-const TopUserView = () => {
+const TopUserView = ({onPress}:{onPress: ()=>void}) => {
 
   const { user } = useSelector((state: RootState) => (state.userReducer));
   
   return (
-    <View style={{backgroundColor: Color.white, flexDirection: 'row', paddingTop: 80, paddingBottom: 20, alignItems: 'center', paddingLeft: 20, paddingRight: 20}}>
-      <Image style={{height: 80, width: 80, borderRadius: 10, backgroundColor: Color._e6ece9}} source={{uri: user.avatar}} />
-      <View style={{flex: 1, paddingHorizontal: 10}}>
-        <Text style={{fontWeight: 'bold', fontSize: sp(32), color: Color.default_fontColor}} numberOfLines={1}>{user.nickname}</Text>
-        <Text style={{marginTop: 10, color: Color.default_fontColor, fontSize: sp(28)}} numberOfLines={1}>编号：{user.number}</Text>
+    <TouchableWithoutFeedback onPress={()=>{
+      onPress();
+    }}>
+      <View style={{backgroundColor: Color.white, flexDirection: 'row', paddingTop: 80, paddingBottom: 20, alignItems: 'center', paddingLeft: 20, paddingRight: 20}}>
+        <Image style={{height: 80, width: 80, borderRadius: 10, backgroundColor: Color._e6ece9}} source={{uri: user.avatar}} />
+        <View style={{flex: 1, paddingHorizontal: 10}}>
+          <Text style={{fontWeight: 'bold', fontSize: sp(32), color: Color.default_fontColor}} numberOfLines={1}>{user.nickname}</Text>
+          <Text style={{marginTop: 10, color: Color.default_fontColor, fontSize: sp(28)}} numberOfLines={1}>编号：{user.number}</Text>
+        </View>
+        <Icon name='chevron-forward-outline' size={20} color={Color.default_fontColor} />
       </View>
-      <Icon name='chevron-forward-outline' size={20} color={Color.default_fontColor} />
-    </View>
+    </TouchableWithoutFeedback>
   );
 }

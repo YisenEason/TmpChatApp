@@ -7,8 +7,10 @@ import { Lightbox, Router, Scene } from "react-native-router-flux";
 import Icon from 'react-native-vector-icons/Ionicons';
 import LoadingModal from "./component/modal/LoadingModal";
 import AddressListPage from "./component/page/AddressListPage";
+import AdvicePage from "./component/page/AdvicePage";
 import ChangePwd from "./component/page/ChangePwd";
 import ChatListPage from "./component/page/ChatListPage";
+import EditUserInfo from "./component/page/EditUserInfo";
 import FirstPage from "./component/page/FirstPage";
 import ForgetPwd from "./component/page/ForgetPwd";
 import LoginPage from "./component/page/LoginPage";
@@ -69,12 +71,14 @@ function NotModalScrren() {
   return (
     <NotModalStack.Navigator mode='card' initialRouteName='LoginPage' screenOptions={{headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS}}>
       {/* Tab */}
-      <NotModalStack.Screen name="Tab" component={TabStackScreen}></NotModalStack.Screen>
+      <NotModalStack.Screen name="Tab" component={TabStackScreen} options={{title: '首页'}}></NotModalStack.Screen>
       {/* Screen */}
       <NotModalStack.Screen name="UserInfo" component={UserInfo}></NotModalStack.Screen>
       <NotModalStack.Screen name="LoginPage" component={LoginPage}></NotModalStack.Screen>
       <NotModalStack.Screen name="ForgetPwd" component={ForgetPwd}></NotModalStack.Screen>
       <NotModalStack.Screen name="ChangePwd" component={ChangePwd} options={{title: '重置密码'}}></NotModalStack.Screen>
+      <NotModalStack.Screen name="AdvicePage" component={AdvicePage} options={{title: '建议与反馈'}}></NotModalStack.Screen> 
+      <NotModalStack.Screen name="EditUserInfo" component={EditUserInfo} options={{title: '编辑个人信息'}}></NotModalStack.Screen> 
     </NotModalStack.Navigator>
   );
 }

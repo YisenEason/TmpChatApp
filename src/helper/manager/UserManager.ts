@@ -8,7 +8,6 @@ class UserManager {
   user?: User;
   
   constructor() {
-
   }
 
   saveUser(user:User) {

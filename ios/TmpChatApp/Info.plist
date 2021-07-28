@@ -39,6 +39,8 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>修改头像需要使用您的相册权限</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>

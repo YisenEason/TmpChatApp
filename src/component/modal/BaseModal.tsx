@@ -35,7 +35,7 @@ const BaseModal: React.FC<Props> = ({children}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.3)',
+    backgroundColor: 'rgba(0,0,0,0.1)',
     position: 'absolute',
     height: '100%',
     width: '100%'

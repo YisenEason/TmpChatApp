@@ -51,7 +51,7 @@ export default class ChangePwd extends BasePage<{}> {
 	render() {
 
 		return (
-			<View style={[globalStyles.container, { }]}>
+			<View style={[globalStyles.container, {}]}>
 				<StatuBar />
 				<ScrollView style={{ flex: 1 }} scrollEnabled={false}>
 					<View style={{ marginTop: 0 }}>
@@ -68,7 +68,7 @@ export default class ChangePwd extends BasePage<{}> {
 						<TouchableOpacity onPress={() => {
 							this.submit();
 						}} style={{ width: '80%', height: 44, borderRadius: 10, backgroundColor: Color.white, alignSelf: 'center', marginTop: 50, justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{color: Color._000000}}>提交</Text>
+              <Text style={{color: Color.default_actionColor, fontSize: sp(30)}}>提交</Text>
 						</TouchableOpacity>
 					</View>
 				</ScrollView>
