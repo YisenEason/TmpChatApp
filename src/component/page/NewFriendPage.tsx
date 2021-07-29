@@ -4,6 +4,7 @@ import { Button, FlatList, Image, NativeModules, PanResponder, PanResponderInsta
 import Color from '../../constant/Color';
 import { globalStyles } from "../../constant/Styles";
 import { sp } from '../../helper/utils/ScreenUtil';
+import AddFriendItem from '../widget/AddFriendItem';
 import FriendItem from '../widget/FriendItem';
 import SectionListIndexView from '../widget/SectionListIndexView';
 import StatuBar from '../widget/StatuBar';
@@ -35,18 +36,12 @@ export default class NewFriendPage extends BasePage<{}> {
 	}
 
   gotoAddFriendPage() {
-    console.log('新页面');
-    
+    this.props.navigation.navigate('AddFrientPage');
   }
 
   _renderItem = ({item, index}) => {
     return (
-      <View style={{justifyContent: 'center'}}>
-        <FriendItem name={item} avatar='' onTap={()=>{}} />
-        <View style={{position: 'absolute', right: 20}}>
-          <Text style={{color: Color.default_subFontColor}}>{index == 1 ?'已过期' : '已添加'}</Text>
-        </View>
-      </View>
+      <AddFriendItem />
     );
   }
 

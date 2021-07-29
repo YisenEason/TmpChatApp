@@ -6,6 +6,7 @@ import { Platform, Text, View } from "react-native";
 import { Lightbox, Router, Scene } from "react-native-router-flux";
 import Icon from 'react-native-vector-icons/Ionicons';
 import LoadingModal from "./component/modal/LoadingModal";
+import AddFrientPage from "./component/page/AddFrientPage";
 import AddressListPage from "./component/page/AddressListPage";
 import AdvicePage from "./component/page/AdvicePage";
 import ChangePwd from "./component/page/ChangePwd";
@@ -70,7 +71,7 @@ function TabStackScreen() {
 
 function NotModalScrren() {
   return (
-    <NotModalStack.Navigator mode='card' initialRouteName='LoginPage' screenOptions={{headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS}}>
+    <NotModalStack.Navigator mode='card' initialRouteName='LoginPage' screenOptions={{headerShown: false, cardStyleInterpolator: Platform.OS === 'ios' ? CardStyleInterpolators.forHorizontalIOS : CardStyleInterpolators.forFadeFromBottomAndroid}}>
       {/* Tab */}
       <NotModalStack.Screen name="Tab" component={TabStackScreen} options={{title: '首页'}}></NotModalStack.Screen>
       {/* Screen */}
@@ -81,6 +82,8 @@ function NotModalScrren() {
       <NotModalStack.Screen name="AdvicePage" component={AdvicePage} options={{title: '建议与反馈'}}></NotModalStack.Screen> 
       <NotModalStack.Screen name="EditUserInfo" component={EditUserInfo} options={{title: '编辑个人信息'}}></NotModalStack.Screen> 
       <NotModalStack.Screen name="NewFriendPage" component={NewFriendPage}></NotModalStack.Screen> 
+      <NotModalStack.Screen name="AddFrientPage" component={AddFrientPage} options={{title: '添加好友'}}></NotModalStack.Screen> 
+
     </NotModalStack.Navigator>
   );
 }
