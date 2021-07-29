@@ -87,7 +87,7 @@ class LoginPage extends BasePage<Props> {
         <StatuBar />
         <ScrollView style={{ flex: 1 }} scrollEnabled={false}>
           <TouchableOpacity style={{ position: 'absolute', top: 100, right: 30 }} onPress={this.gotoForgetPwdPage.bind(this)}>
-            <Text style={{ color: Color._000000, fontSize: sp(32) }}>忘记密码</Text>
+            <Text style={{ color: Color.default_actionColor, fontSize: sp(32) }}>忘记密码</Text>
           </TouchableOpacity>
 
           <View style={{ marginTop: 180 }}>
@@ -109,8 +109,8 @@ class LoginPage extends BasePage<Props> {
             }} style={{ width: 80, height: 80, alignSelf: 'flex-end', marginTop: 30, marginRight: 30, justifyContent: 'center', alignItems: 'center' }}>
               {
                 isLoading ?
-                  <ActivityIndicator size={'large'} color={Color._000000} /> :
-                  <Icon name="chevron-forward-circle-outline" size={80} color={Color.white} style={{ opacity: allowSubmit ? 1 : 0.3 }} />
+                  <ActivityIndicator size={'large'} color={Color.default_actionColor} /> :
+                  <Icon name="chevron-forward-circle-outline" size={80} color={Color.default_actionColor} style={{ opacity: allowSubmit ? 1 : 0.3 }} />
               }
             </TouchableOpacity>
           </View>

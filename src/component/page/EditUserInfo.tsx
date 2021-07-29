@@ -1,6 +1,6 @@
 import { StackNavigationOptions } from '@react-navigation/stack';
 import React from 'react';
-import { Alert, Button, Image, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
+import { Alert, Button, Image, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
 import ImageCropPicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Color from '../../constant/Color';
@@ -61,7 +61,7 @@ class EditUserInfo extends BasePage<{}> {
 
 
 		return (
-			<View style={globalStyles.container}>
+			<ScrollView style={globalStyles.container} scrollEnabled={false}>
 				<StatuBar />
 				<View style={{ backgroundColor: Color.white }}>
 					<TouchableWithoutFeedback onPress={this.editAvatar}>
@@ -79,7 +79,7 @@ class EditUserInfo extends BasePage<{}> {
 						<TextInput style={{flex: 1, fontSize: sp(30)}} textAlign='right' placeholder="请输入昵称" defaultValue={nickname} />
 					</View>
 				</View>
-			</View>
+			</ScrollView>
 		);
 	}
 }

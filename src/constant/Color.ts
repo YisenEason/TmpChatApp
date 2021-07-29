@@ -23,7 +23,8 @@ const Color = {
   default_backgroundColor: '#ededed',
   default_fontColor: '#22254c',
   default_divisionColor: '#E6ECE9',
-  default_actionColor: '#2481FF'
+  default_actionColor: '#2481FF',
+  default_subFontColor: '#b4bbc3',
 }
 
 export default Color;

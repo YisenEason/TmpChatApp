@@ -14,6 +14,7 @@ import EditUserInfo from "./component/page/EditUserInfo";
 import FirstPage from "./component/page/FirstPage";
 import ForgetPwd from "./component/page/ForgetPwd";
 import LoginPage from "./component/page/LoginPage";
+import NewFriendPage from "./component/page/NewFriendPage";
 import UserInfo from "./component/page/UserInfo";
 import Header from "./component/widget/Header";
 import LoginPageContainer from "./redux/container/LoginPageContainer";
@@ -79,6 +80,7 @@ function NotModalScrren() {
       <NotModalStack.Screen name="ChangePwd" component={ChangePwd} options={{title: '重置密码'}}></NotModalStack.Screen>
       <NotModalStack.Screen name="AdvicePage" component={AdvicePage} options={{title: '建议与反馈'}}></NotModalStack.Screen> 
       <NotModalStack.Screen name="EditUserInfo" component={EditUserInfo} options={{title: '编辑个人信息'}}></NotModalStack.Screen> 
+      <NotModalStack.Screen name="NewFriendPage" component={NewFriendPage}></NotModalStack.Screen> 
     </NotModalStack.Navigator>
   );
 }
