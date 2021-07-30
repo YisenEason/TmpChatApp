@@ -30,7 +30,7 @@ export default class NewFriendPage extends BasePage<{}> {
 
   _headerRightBtn = () => {
 		return (
-			<TouchableOpacity style={{paddingHorizontal: 15}} onPress={this.gotoAddFriendPage.bind(this)}>
+			<TouchableOpacity style={{}} onPress={this.gotoAddFriendPage.bind(this)}>
 				<Text style={{color: Color.default_actionColor, fontSize: sp(30)}}>添加朋友</Text>
 			</TouchableOpacity>
 		);

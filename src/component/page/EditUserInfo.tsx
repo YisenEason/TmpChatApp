@@ -26,7 +26,7 @@ class EditUserInfo extends BasePage<{}> {
 
 	_headerRightBtn = () => {
 		return (
-			<TouchableOpacity style={{paddingHorizontal: 15}} onPress={this.save}>
+			<TouchableOpacity style={{}} onPress={this.save}>
 				<Text style={{color: Color.default_actionColor, fontSize: sp(30)}}>保存</Text>
 			</TouchableOpacity>
 		);

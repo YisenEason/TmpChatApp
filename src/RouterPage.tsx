@@ -15,10 +15,16 @@ import LoginPage from "./component/page/LoginPage";
 import NewFriendPage from "./component/page/NewFriendPage";
 import UserInfo from "./component/page/UserInfo";
 
+import { enableScreens } from 'react-native-screens';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+
+
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const NotModalStack = createStackNavigator();
+
+enableScreens();
+const NotModalStack = createNativeStackNavigator();
 
 function ChatTabScreen() {
   return (
@@ -65,19 +71,19 @@ function TabStackScreen() {
 }
 
 function NotModalScrren() {
-  
+
   return (
-    <NotModalStack.Navigator mode='card' initialRouteName='LoginPage' screenOptions={{headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS}}>
+    <NotModalStack.Navigator initialRouteName='LoginPage' screenOptions={{headerShown: false, stackAnimation: 'slide_from_right'}}>
       {/* Tab */}
       <NotModalStack.Screen name="Tab" component={TabStackScreen} options={{title: '首页'}}></NotModalStack.Screen>
       {/* Screen */}
-      <NotModalStack.Screen name="UserInfo" component={UserInfo}></NotModalStack.Screen>
-      <NotModalStack.Screen name="LoginPage" component={LoginPage}></NotModalStack.Screen>
-      <NotModalStack.Screen name="ForgetPwd" component={ForgetPwd}></NotModalStack.Screen>
+      <NotModalStack.Screen name="UserInfo" component={UserInfo} options={{title: '用户信息'}}></NotModalStack.Screen>
+      <NotModalStack.Screen name="LoginPage" component={LoginPage} options={{title: '登陆'}}></NotModalStack.Screen>
+      <NotModalStack.Screen name="ForgetPwd" component={ForgetPwd} options={{title: '忘记密码'}}></NotModalStack.Screen>
       <NotModalStack.Screen name="ChangePwd" component={ChangePwd} options={{title: '重置密码'}}></NotModalStack.Screen>
       <NotModalStack.Screen name="AdvicePage" component={AdvicePage} options={{title: '建议与反馈'}}></NotModalStack.Screen> 
       <NotModalStack.Screen name="EditUserInfo" component={EditUserInfo} options={{title: '编辑个人信息'}}></NotModalStack.Screen> 
-      <NotModalStack.Screen name="NewFriendPage" component={NewFriendPage}></NotModalStack.Screen> 
+      <NotModalStack.Screen name="NewFriendPage" component={NewFriendPage} options={{title: '新的朋友'}}></NotModalStack.Screen> 
       <NotModalStack.Screen name="AddFrientPage" component={AddFrientPage} options={{title: '添加好友'}}></NotModalStack.Screen> 
 
     </NotModalStack.Navigator>

@@ -4,6 +4,8 @@ import { StackNavigationOptions } from '@react-navigation/stack';
 import { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
 import Icon from 'react-native-vector-icons/Ionicons';
 import Color from "../../constant/Color";
+import { NativeStackNavigationOptions } from "react-native-screens/lib/typescript/native-stack";
+import { sp } from "../../helper/utils/ScreenUtil";
 interface BaseProps {
   navigation: any,
   route: any,
@@ -11,14 +13,13 @@ interface BaseProps {
 
 export default class BasePage<P> extends React.Component<P & BaseProps> {
 
-  baseNavigationOptions: StackNavigationOptions = {
+  baseNavigationOptions: NativeStackNavigationOptions = {
     headerShown: true,
-    headerTitleAlign: 'center',
-    // headerBackImage: ()=>(
-    //   <TouchableOpacity onPress={()=>{this.props.navigation.pop()}}>
-    //     <Icon name={'chevron-back-outline'} size={23} color={Color.default_actionColor} />  
-    //   </TouchableOpacity>
-    // )
+    // headerTitleAlign: 'center',
+    // headerCenter: ()=>(<Text>123123</Text>),
+    headerTitleStyle: {
+      fontSize: sp(32)
+    }
   }  
 
   constructor(props: any) {
