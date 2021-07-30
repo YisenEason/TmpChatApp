@@ -5,3 +5,4 @@ node_modules
 /android/app/build
 .idea
 /android/.gradle
+android/local.properties
