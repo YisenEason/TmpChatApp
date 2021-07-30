@@ -14,11 +14,11 @@ export default class BasePage<P> extends React.Component<P & BaseProps> {
   baseNavigationOptions: StackNavigationOptions = {
     headerShown: true,
     headerTitleAlign: 'center',
-    headerBackImage: ()=>(
-      <TouchableOpacity onPress={()=>{this.props.navigation.pop()}}>
-        <Icon name={'chevron-back-outline'} size={23} color={Color.default_actionColor} />  
-      </TouchableOpacity>
-    )
+    // headerBackImage: ()=>(
+    //   <TouchableOpacity onPress={()=>{this.props.navigation.pop()}}>
+    //     <Icon name={'chevron-back-outline'} size={23} color={Color.default_actionColor} />  
+    //   </TouchableOpacity>
+    // )
   }  
 
   constructor(props: any) {

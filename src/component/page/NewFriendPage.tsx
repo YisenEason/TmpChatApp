@@ -4,6 +4,7 @@ import { Button, FlatList, Image, NativeModules, PanResponder, PanResponderInsta
 import Color from '../../constant/Color';
 import { globalStyles } from "../../constant/Styles";
 import { sp } from '../../helper/utils/ScreenUtil';
+import { rootNavRef } from '../../RouterPage';
 import AddFriendItem from '../widget/AddFriendItem';
 import FriendItem from '../widget/FriendItem';
 import SectionListIndexView from '../widget/SectionListIndexView';
@@ -41,7 +42,7 @@ export default class NewFriendPage extends BasePage<{}> {
 
   _renderItem = ({item, index}) => {
     return (
-      <AddFriendItem />
+      <AddFriendItem user={{nickname: ''+index}} />
     );
   }
 

@@ -13,7 +13,7 @@ type Props = {
 
 const FriendItem: FC<Props> = ({ user = { nickname: '未知用户' }, onTap, icon }) => {
   return (
-    <TouchableWithoutFeedback onPress={onTap}>
+    <TouchableOpacity onPress={onTap}>
       <View style={{ backgroundColor: Color.white, flexDirection: 'row', height: 55, alignItems: 'center' }}>
         <View style={{ paddingHorizontal: 16 }}>
           {
@@ -30,7 +30,7 @@ const FriendItem: FC<Props> = ({ user = { nickname: '未知用户' }, onTap, ico
         <Text style={{ color: Color.default_fontColor, fontSize: sp(28) }}>{user.nickname}</Text>
         <View style={{ position: 'absolute', bottom: 0, left: 72, width: '100%', backgroundColor: Color.default_divisionColor, height: 0.5 }} />
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 }
 

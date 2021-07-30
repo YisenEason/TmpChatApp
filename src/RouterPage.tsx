@@ -1,9 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer, NavigationContainerRef, ParamListBase, RouteProp } from "@react-navigation/native";
+import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native";
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack";
-import React, { RefObject } from "react";
-import { Platform, Text, View } from "react-native";
-import { Lightbox, Router, Scene } from "react-native-router-flux";
+import React from "react";
 import Icon from 'react-native-vector-icons/Ionicons';
 import LoadingModal from "./component/modal/LoadingModal";
 import AddFrientPage from "./component/page/AddFrientPage";
@@ -12,13 +10,10 @@ import AdvicePage from "./component/page/AdvicePage";
 import ChangePwd from "./component/page/ChangePwd";
 import ChatListPage from "./component/page/ChatListPage";
 import EditUserInfo from "./component/page/EditUserInfo";
-import FirstPage from "./component/page/FirstPage";
 import ForgetPwd from "./component/page/ForgetPwd";
 import LoginPage from "./component/page/LoginPage";
 import NewFriendPage from "./component/page/NewFriendPage";
 import UserInfo from "./component/page/UserInfo";
-import Header from "./component/widget/Header";
-import LoginPageContainer from "./redux/container/LoginPageContainer";
 
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -70,8 +65,9 @@ function TabStackScreen() {
 }
 
 function NotModalScrren() {
+  
   return (
-    <NotModalStack.Navigator mode='card' initialRouteName='LoginPage' screenOptions={{headerShown: false, cardStyleInterpolator: Platform.OS === 'ios' ? CardStyleInterpolators.forHorizontalIOS : CardStyleInterpolators.forFadeFromBottomAndroid}}>
+    <NotModalStack.Navigator mode='card' initialRouteName='LoginPage' screenOptions={{headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS}}>
       {/* Tab */}
       <NotModalStack.Screen name="Tab" component={TabStackScreen} options={{title: '首页'}}></NotModalStack.Screen>
       {/* Screen */}
