@@ -21,7 +21,7 @@ class AddFrientPage extends BasePage<{}> {
 		dataSource: [],
 	}
 
-	searchText: string = '';
+	searchText = ''
 
 	constructor(props: any) {
 		super(props);
@@ -57,20 +57,19 @@ class AddFrientPage extends BasePage<{}> {
 
 	render() {
 
-		const { isLoading, dataSource, isFirst } = this.state;
-
+		const { isLoading, dataSource } = this.state;
+		
 		return (
 			<ScrollView style={globalStyles.container} scrollEnabled={false}>
 				<StatuBar />
 				<SearchTextInput onChangeText={(text) => {
 					this.searchText = text;
-				}} onEndEditing={(e) => {
+				}} onEndEditing={(e) => {					
 					if (e.nativeEvent.text.length <= 0) {
 						return;
 					}
 					this.search();
 					console.log('提交');
-
 				}} returnKeyType='done' />
 
 				<LoadingPlaceholderView loading={isLoading} style={{ marginTop: 20 }}>
@@ -118,13 +117,16 @@ const SearchTextInput: FC<{
 					<Text style={{ color: Color.default_subFontColor, marginLeft: 5 }}>用户编号</Text>
 				</View>
 			}
-			<TextInput style={{ paddingHorizontal: 10, fontSize: sp(30), paddingVertical: 10 }} onFocus={() => {
+			<TextInput clearButtonMode='while-editing' style={{ paddingHorizontal: 10, fontSize: sp(30), paddingVertical: 5 }} {...props} onFocus={(e) => {
 				setShowPlaceholder(false);
-			}} onBlur={(e) => {
+				props.onFocus && props.onFocus(e);
+			}} onEndEditing={(e)=>{
 				if (e.nativeEvent.text.length <= 0) {
 					setShowPlaceholder(true);
 				}
-			}} {...props} />
+				props.onEndEditing && props.onEndEditing(e);
+			}} />
+			
 		</View>
 	);
 }

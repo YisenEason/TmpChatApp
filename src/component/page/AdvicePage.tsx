@@ -40,7 +40,7 @@ class AdvicePage extends BasePage<{}> {
       <ScrollView style={globalStyles.container} scrollEnabled={false}>
         <StatuBar />
         <View style={{margin:20, padding: 10, backgroundColor: Color.white, minHeight: 120, borderRadius: 10}}>
-          <TextInput style={{fontSize: sp(28)}} multiline={true} placeholder="请输入您的建议或者反馈" ></TextInput>
+          <TextInput clearButtonMode='while-editing' style={{fontSize: sp(28)}} multiline={true} placeholder="请输入您的建议或者反馈" ></TextInput>
         </View>
         <LoadingPlaceholderView loading={isLoading} style={{height: 44, paddingHorizontal: 20}} >
           <TouchableOpacity style={{backgroundColor: Color.white, width: '100%', height: '100%', borderRadius: 10, justifyContent: 'center', alignItems: 'center'}} onPress={()=>{

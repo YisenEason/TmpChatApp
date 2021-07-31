@@ -78,7 +78,7 @@ export default class SectionListIndexView extends React.Component<{
     const { showPreview } = this.state;
 
     return (
-      <View style={[{ ...this.props.style }]} pointerEvents='box-none'>
+      <View style={[{ ...this.props.style }]}>
         <View ref={this._viewRef} onLayout={(layout) => {
 
           // 获取当前View绝对Y值（包括状态栏）
@@ -93,7 +93,7 @@ export default class SectionListIndexView extends React.Component<{
               });
             }
           })
-        }} style={{}} {...this._panResponder.panHandlers} pointerEvents='box-only'>
+        }} style={{}} {...this._panResponder.panHandlers}>
           <View>
             {
               this.dataSource.map((item) => {

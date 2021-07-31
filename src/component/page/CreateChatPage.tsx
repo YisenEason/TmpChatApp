@@ -1,16 +1,15 @@
-import { StackNavigationOptions } from '@react-navigation/stack';
-import React, { RefObject } from 'react';
-import { Button, FlatList, Image, NativeModules, PanResponder, PanResponderInstance, Platform, SectionList, StatusBar, Text, TouchableOpacity, UIManager, View, ViewStyle } from "react-native";
+import React from 'react';
+import { Image, Platform, SectionList, Text, TouchableOpacity, View } from 'react-native';
+import { NativeStackNavigationOptions } from 'react-native-screens/lib/typescript/native-stack';
+import BasePage from './BasePage';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Color from '../../constant/Color';
-import { Frame } from '../../constant/Contants';
-import { globalStyles } from "../../constant/Styles";
+import { sp } from '../../helper/utils/ScreenUtil';
 import FriendItem from '../widget/FriendItem';
-import PopupViewByALPage from '../widget/PopupViewByALPage';
-import SectionListIndexView from '../widget/SectionListIndexView';
+import { globalStyles } from '../../constant/Styles';
 import StatuBar from '../widget/StatuBar';
-import BasePage from "./BasePage";
-
+import SectionListIndexView from '../widget/SectionListIndexView';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const dataSource = [
   { title: 'a', data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
@@ -26,14 +25,18 @@ const dataSource = [
   { title: 'z', data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
   { title: 'p', data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
 ];
-export default class AddressListPage extends BasePage<{}> {
+
+export default class CreateChatPage extends BasePage<{}> {
 
   constructor(props: any) {
     super(props);
 
-    let navOptions: StackNavigationOptions = {
+    let navOptions: NativeStackNavigationOptions = {
       ...this.baseNavigationOptions,
-      title: '通讯录',
+      headerShown: true,
+      stackAnimation:  Platform.OS === 'ios' ? 'flip' : 'default',
+      headerCenter: this._headerCenter,
+      headerLeft: this._headerLeftBtn,
       headerRight: this._headerRightBtn
     }
     this.props.navigation.setOptions(navOptions)
@@ -51,19 +54,52 @@ export default class AddressListPage extends BasePage<{}> {
     return indexDataSource;
   }
 
+  _headerCenter = () => {
+    return <Text style={{ fontSize: sp(34) }}>{'选择联系人'}</Text>
+  }
+
+  _headerLeftBtn = () => {
+    return (
+      <TouchableOpacity style={{}} onPress={() => {
+        this.props.navigation.pop();
+      }}>
+        <Icon name='close-outline' color={Color.default_actionColor} size={23}></Icon>
+      </TouchableOpacity>
+    );
+  }
+
   _headerRightBtn = () => {
     return (
-      <TouchableOpacity style={{ paddingHorizontal: 15 }} onPress={() => {
-        this.props.navigation.navigate('AddFrientPage');
+      <TouchableOpacity style={{}} onPress={() => {
+        this.props.navigation.navigate('ChatPage', {
+          name: '聊天'
+        });
       }}>
-        <Icon name='person-add-outline' color={Color.default_actionColor} size={23}></Icon>
+        <Icon name='checkmark-outline' color={Color.default_actionColor} size={23}></Icon>
       </TouchableOpacity>
     );
   }
 
   _renderItem = ({ item, index }) => {
+
+    const selected = index === 3;
+
     return (
-      <FriendItem name={item} avatar='' />
+      <TouchableWithoutFeedback onPress={()=>{
+        console.log('aa');
+      }}>
+        <View style={{flexDirection: 'row', backgroundColor: Color.white, alignItems: 'center'}}>
+          {
+            selected && 
+            <Icon style={{paddingLeft: 15}} name='radio-button-on-outline' size={24} color={Color._f65257}></Icon>
+          }
+          {
+            !selected &&
+            <Icon style={{paddingLeft: 15}} name='radio-button-off-outline' size={24} color={Color.default_subFontColor}></Icon>
+          }
+          <FriendItem name={item} avatar='' style={{flex: 1}} disable={true} />
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 
@@ -71,19 +107,6 @@ export default class AddressListPage extends BasePage<{}> {
     return (
       <View style={{ paddingVertical: 5, paddingLeft: 16, backgroundColor: Color.default_backgroundColor }}>
         <Text>{section.title}</Text>
-      </View>
-    );
-  }
-
-  _renderListHeaderComponent = () => {
-    return (
-      <View>
-        <FriendItem user={{ nickname: '新的朋友' }} icon='person-add-outline' onTap={() => {
-          this.props.navigation.navigate('NewFriendPage');
-        }} />
-        <FriendItem user={{ nickname: '群聊' }} icon='chatbubbles-outline' onTap={()=>{
-          this.props.navigation.navigate('ChatGroupListPage');
-        }} />
       </View>
     );
   }
@@ -102,7 +125,6 @@ export default class AddressListPage extends BasePage<{}> {
           renderItem={this._renderItem}
           keyExtractor={(item, index) => { return item + '' + index }}
           renderSectionHeader={this._renderSectionHeader}
-          ListHeaderComponent={this._renderListHeaderComponent}
         ></SectionList>
         <SectionListIndexView dataSource={this.getSectionListIndexDataSource()} style={{ zIndex: 999, position: 'absolute', width: 30, right: 0 }} onChange={(index) => {
           try {

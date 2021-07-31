@@ -17,6 +17,12 @@ import UserInfo from "./component/page/UserInfo";
 
 import { enableScreens } from 'react-native-screens';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import SearchPage from "./component/page/SearchPage";
+import ChatPage from "./component/page/ChatPage";
+import ChatDetailPage from "./component/page/ChatDetailPage";
+import UserDetail from "./component/page/UserDetail";
+import ChatGroupListPage from "./component/page/ChatGroupListPage";
+import CreateChatPage from "./component/page/CreateChatPage";
 
 
 const MainStack = createStackNavigator();
@@ -85,6 +91,12 @@ function NotModalScrren() {
       <NotModalStack.Screen name="EditUserInfo" component={EditUserInfo} options={{title: '编辑个人信息'}}></NotModalStack.Screen> 
       <NotModalStack.Screen name="NewFriendPage" component={NewFriendPage} options={{title: '新的朋友'}}></NotModalStack.Screen> 
       <NotModalStack.Screen name="AddFrientPage" component={AddFrientPage} options={{title: '添加好友'}}></NotModalStack.Screen> 
+      <NotModalStack.Screen name="SearchPage" component={SearchPage} options={{title: '搜索'}}></NotModalStack.Screen> 
+      <NotModalStack.Screen name="ChatPage" component={ChatPage} options={{title: '聊天'}}></NotModalStack.Screen> 
+      <NotModalStack.Screen name="ChatDetailPage" component={ChatDetailPage} options={{title: '聊天信息'}}></NotModalStack.Screen> 
+      <NotModalStack.Screen name="UserDetail" component={UserDetail} options={{title: '用户详情'}}></NotModalStack.Screen>
+      <NotModalStack.Screen name="ChatGroupListPage" component={ChatGroupListPage} options={{title: '群聊列表'}}></NotModalStack.Screen>
+      <NotModalStack.Screen name="CreateChatPage" component={CreateChatPage} options={{title: '选择联系人'}}></NotModalStack.Screen>
 
     </NotModalStack.Navigator>
   );

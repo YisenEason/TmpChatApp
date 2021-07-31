@@ -18,7 +18,6 @@ type Props = {
   rightIcon?: string,
   rightTitle?: string,
   
-  navigation: any,
 }
 
 const { width, height } = Dimensions.get('window');

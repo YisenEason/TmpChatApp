@@ -17,6 +17,7 @@ export default class BasePage<P> extends React.Component<P & BaseProps> {
     headerShown: true,
     // headerTitleAlign: 'center',
     // headerCenter: ()=>(<Text>123123</Text>),
+    headerBackTitle: '',
     headerTitleStyle: {
       fontSize: sp(32)
     }

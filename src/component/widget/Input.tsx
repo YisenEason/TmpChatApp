@@ -17,7 +17,7 @@ const Input: React.FC<Props & TextInputProps> = (props) => {
     <View style={styles.container}>
       <Text style={{fontSize: sp(32), color: Color._000000}}>{props.label}</Text>
       <View style={{justifyContent: 'center', alignItems:'center', flexDirection: 'row'}}>
-        <TextInput {...props} secureTextEntry={hidePassword} style={{flex: 1, fontSize: sp(32), height: 50, color: Color._000000}} placeholderTextColor={Color._b4bbc3}></TextInput>
+        <TextInput clearButtonMode='while-editing' {...props} secureTextEntry={hidePassword} style={{flex: 1, fontSize: sp(32), height: 50, color: Color._000000}} placeholderTextColor={Color._b4bbc3}></TextInput>
         {
           props.isPassword &&
           <TouchableOpacity style={{right: 0, paddingHorizontal: 10}} onPress={()=>{

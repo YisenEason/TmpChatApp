@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { ViewStyle } from 'react-native';
 import { Image, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Color from '../../constant/Color';
@@ -8,13 +9,15 @@ import { sp } from '../../helper/utils/ScreenUtil';
 type Props = {
   onTap?: () => void
   icon?: string,
-  user: User
+  user: User,
+  style?: ViewStyle,
+  disable?: boolean
 }
 
-const FriendItem: FC<Props> = ({ user = { nickname: '未知用户' }, onTap, icon }) => {
+const FriendItem: FC<Props> = ({ user = { nickname: '未知用户' }, onTap, icon, style, disable=false }) => {
   return (
-    <TouchableOpacity onPress={onTap}>
-      <View style={{ backgroundColor: Color.white, flexDirection: 'row', height: 55, alignItems: 'center' }}>
+    <TouchableOpacity onPress={onTap} style={style} disabled={disable}>
+      <View style={[{ backgroundColor: Color.white, flexDirection: 'row', height: 55, alignItems: 'center' }]}>
         <View style={{ paddingHorizontal: 16 }}>
           {
             icon !== undefined &&

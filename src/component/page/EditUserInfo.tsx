@@ -76,7 +76,7 @@ class EditUserInfo extends BasePage<{}> {
 					<View style={{height: 0.5, width: '100%', backgroundColor: Color.default_divisionColor}} />
 					<View style={{paddingHorizontal: 20, paddingRight: 30, paddingVertical: 12, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
           	<Text style={{fontSize: sp(30), color: Color.default_fontColor, marginRight: 20}} numberOfLines={1}>昵称</Text>
-						<TextInput style={{flex: 1, fontSize: sp(30)}} textAlign='right' placeholder="请输入昵称" defaultValue={nickname} />
+						<TextInput clearButtonMode='while-editing' style={{flex: 1, fontSize: sp(30)}} textAlign='right' placeholder="请输入昵称" defaultValue={nickname} />
 					</View>
 				</View>
 			</ScrollView>
