@@ -82,7 +82,7 @@ class ChatListPage extends BasePage<{}> {
   }
 
   _renderItem = ({item, index}) => {
-    console.log(item);
+    console.log(item.name);
     
     return (
       <ChatUserItem name={item.name} avatar={item.avatar} lastChat={item.lastChat} date={item.date} onTap={()=>{
