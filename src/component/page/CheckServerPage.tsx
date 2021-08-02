@@ -52,8 +52,11 @@ export default class CheckServerPage extends BasePage<{}> {
         <View>
           <ActivityIndicator />
           <Text style={{marginTop: 30}}>{label}...</Text>
-          <Button title="创建数据库" onPress={()=>{
-            SqlUtil.executeSQL('SELECT * FROM sqlite_sequence LIMIT 1000');
+          <Button title="打开数据库" onPress={()=>{
+            SqlUtil.initDB();
+          }}></Button>
+          <Button title="创建表" onPress={()=>{
+            SqlUtil.initAllTable();
           }}></Button>
         </View>
       </View>
