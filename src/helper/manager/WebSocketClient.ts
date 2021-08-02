@@ -1,5 +1,8 @@
+import { refreshAppStatusAction } from "../../redux/actions/AppStatusActions";
+import { appDispatch } from "../../redux/Store";
+import appStatus from "./AppStatus";
 
-const url = 'ws://82.157.123.54:9010/ajaxchattest';
+const url = 'ws://10.153.153.73:8001';
 let that: any = null;
 
 export default class WebSocketClient {
@@ -10,9 +13,15 @@ export default class WebSocketClient {
   timer: NodeJS.Timeout | undefined;
   timeout: NodeJS.Timeout | undefined;
 
+  // 心跳检查计数，当heartCheckCount达到heartCheckMAXCount次数时，发送一次心跳消息
+  heartCheckMAXCount: number = 15;
+  heartCheckCount: number = 0;
+
+  // 距离上次接收到pong的秒数
+  noPongSecond: number = 0;
+  noPongMaxSecond: number = 60;
+
   constructor() {
-    // this.ws = null;
-    // this.timer = null;
     that = this;
   }
 
@@ -48,46 +57,68 @@ export default class WebSocketClient {
    */
   initWsEvent() {
 
+    appStatus.refresh('offline');
+
     if (!this.ws) {
       throw new Error('WebSocket: WebSocket对象为null');
     }
 
+    let that = this;
     //建立WebSocket连接
     this.ws.onopen = function () {
       console.log('WebSocket:', '已连接到服务器');
+      appStatus.refresh('online');
     };
 
     //客户端接收服务端数据时触发
     this.ws.onmessage = function (evt) {
-      if (evt.data !== 'pong') {
-        //不是心跳消息，消息处理逻辑
+
+      if (evt.data === 'PONG') {
+        console.log('WebSocket: 服务器消息: ', evt.data);
+        that.noPongSecond = 0;
+      }else {
         console.log('WebSocket: 服务器消息: ', evt.data);
         //接收到消息，处理逻辑...
-
-      } else {
-        console.log('WebSocket: 服务器pong消息: ', evt.data);
       }
+
+      appStatus.refresh('online');
     };
     //连接错误
     this.ws.onerror = function (err) {
       console.log('WebSocket:', `连接服务器错误(${new Date()}).`);
+      appStatus.refresh('offline');
       //重连
       that.reconnect();
     };
     //连接关闭
     this.ws.onclose = function () {
       console.log('WebSocket:', '连接关闭');
+      appStatus.refresh('offline');
+      that.timer && clearInterval(that.timer);
       //重连
       that.reconnect();
     };
 
-    //每隔15s向服务器发送一次心跳
+    // 定时器，每秒操作
     this.timer = setInterval(() => {
-      if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-        console.log('WebSocket:', '发送心跳ping');
-        this.sendMessage('ping');
+
+      // 发送心跳
+      this.heartCheckCount++;
+      if (this.heartCheckCount > this.heartCheckMAXCount) {
+        this.heartCheckCount = 0;
+        if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+          console.log('WebSocket:', '发送心跳ping');
+          this.sendMessage('PING');
+        }
       }
-    }, 15000);
+
+      // 检查心跳回馈，若长时间没有回馈则说明断线
+      this.noPongSecond++;
+      if (this.noPongSecond > this.noPongMaxSecond) {
+        appStatus.refresh('offline');
+      }
+
+    }, 1000);
   }
 
   //发送消息

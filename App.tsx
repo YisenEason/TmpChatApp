@@ -9,6 +9,7 @@
  */
 
 import React from 'react';
+import { AppState } from 'react-native';
 import { Provider } from 'react-redux';
 import WebSocketClient from './src/helper/manager/WebSocketClient';
 import { store } from './src/redux/Store';
@@ -17,11 +18,22 @@ import RouterPage from './src/RouterPage';
 export default class App extends React.Component {
 
   componentDidMount() {
-    WebSocketClient.getInstance().initWebSocket();
+
+    AppState.addEventListener("change", (nextAppState)=>{
+      console.log(nextAppState);
+      if (nextAppState === 'active') {
+        WebSocketClient.getInstance().initWebSocket();
+      }else {
+        WebSocketClient.getInstance().close();
+      }
+    });
   }
 
   componentWillUnmount() {
-    WebSocketClient.getInstance().close();
+
+    AppState.removeEventListener("change", (nextAppState)=>{
+      
+    });
   }
 
   render () {

@@ -23,6 +23,9 @@ import ChatDetailPage from "./component/page/ChatDetailPage";
 import UserDetail from "./component/page/UserDetail";
 import ChatGroupListPage from "./component/page/ChatGroupListPage";
 import CreateChatPage from "./component/page/CreateChatPage";
+import { Text } from "react-native";
+import AppStatusLabel from "./component/widget/AppStatusLabel";
+import CheckServerPage from "./component/page/CheckServerPage";
 
 
 const MainStack = createStackNavigator();
@@ -79,7 +82,7 @@ function TabStackScreen() {
 function NotModalScrren() {
 
   return (
-    <NotModalStack.Navigator initialRouteName='LoginPage' screenOptions={{headerShown: false, stackAnimation: 'slide_from_right'}}>
+    <NotModalStack.Navigator initialRouteName='CheckServerPage' screenOptions={{headerShown: false, stackAnimation: 'slide_from_right'}}>
       {/* Tab */}
       <NotModalStack.Screen name="Tab" component={TabStackScreen} options={{title: '首页'}}></NotModalStack.Screen>
       {/* Screen */}
@@ -97,7 +100,7 @@ function NotModalScrren() {
       <NotModalStack.Screen name="UserDetail" component={UserDetail} options={{title: '用户详情'}}></NotModalStack.Screen>
       <NotModalStack.Screen name="ChatGroupListPage" component={ChatGroupListPage} options={{title: '群聊列表'}}></NotModalStack.Screen>
       <NotModalStack.Screen name="CreateChatPage" component={CreateChatPage} options={{title: '选择联系人'}}></NotModalStack.Screen>
-
+      <NotModalStack.Screen name="CheckServerPage" component={CheckServerPage} options={{title: '检查和更新数据'}}></NotModalStack.Screen>
     </NotModalStack.Navigator>
   );
 }
@@ -108,6 +111,7 @@ export default class RouterPage extends React.Component {
   render () {
     
     return (
+      <>
       <NavigationContainer ref={(ref)=>{rootNavRef=ref}}>
         <RootStack.Navigator initialRouteName="NotModalScrren" mode='modal'>
           {/* Screen */}
@@ -116,6 +120,8 @@ export default class RouterPage extends React.Component {
           <RootStack.Screen name="LoadingModal" component={LoadingModal} options={{headerShown:false, cardStyle: {backgroundColor: 'transparent'}, animationEnabled: false}} />
         </RootStack.Navigator>
       </NavigationContainer>
+      <AppStatusLabel />
+      </>
     )
   }
 }
