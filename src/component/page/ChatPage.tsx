@@ -12,6 +12,9 @@ import ChatInputView from '../widget/Chat/ChatInputView';
 import { RefObject } from 'react';
 import { isIphoneX, getBottomSpace } from 'react-native-iphone-x-helper'
 import MessageItem from '../widget/Chat/MessageItem';
+import User from '../../dto/User';
+import userManager from '../../helper/manager/UserManager';
+import { ChatInfo } from '../../dto/ChatInfo';
 
 export enum CHAT_TYPE{
   'SingleChat',
@@ -55,14 +58,23 @@ const data = [
   // }
 ]
 
-export default class ChatPage extends BasePage<{}> {
+type Props = {
+  user: User
+}
+
+export default class ChatPage extends BasePage<Props> {
 
   state = {
     dataSource: data
   }
 
+  // 当前聊天用户
+  user: User;
+
   constructor(props: any) {
     super(props);
+
+    this.user = this.props.route.params.user;
 
     let navOptions: NativeStackNavigationOptions = {
       ...this.baseNavigationOptions,
@@ -70,6 +82,7 @@ export default class ChatPage extends BasePage<{}> {
       headerCenter: this._headerCenter,
     }
     this.props.navigation.setOptions(navOptions)
+    
   }
 
   _headerRightBtn = () => {
@@ -86,7 +99,7 @@ export default class ChatPage extends BasePage<{}> {
 
   _headerCenter = () => {
     // const title = this.props.route.params ? this.props.route.params.title : '';
-    return <Text style={{fontSize: sp(34)}}>{this.props.route.params.name}</Text>
+    return <Text style={{fontSize: sp(34)}}>{this.user?.name}</Text>
   }
 
   _listRef: RefObject<FlatList> = React.createRef();
@@ -118,23 +131,33 @@ export default class ChatPage extends BasePage<{}> {
           contentOffsetKeyboardOpened={0}
         >
           <ChatInputView listRef={this._listRef} onSend={(text)=>{
-            if (this.state.dataSource.length % 2 === 0) {
-              this.setState({
-                dataSource: [...this.state.dataSource, {
-                  message: text,
-                  avatar: 'https://tupian.qqw21.com/article/UploadPic/2021-5/202152118133933757.jpg',
-                  isOwn: true,
-                }]
-              })
-            }else {
-              this.setState({
-                dataSource: [...this.state.dataSource, {
-                  message: text,
-                  avatar: 'https://tupian.qqw21.com/article/UploadPic/2021-7/202171622301582153.jpg',
-                  isOwn: false,
-                }]
-              })
+            // if (this.state.dataSource.length % 2 === 0) {
+            //   this.setState({
+            //     dataSource: [...this.state.dataSource, {
+            //       message: text,
+            //       avatar: 'https://tupian.qqw21.com/article/UploadPic/2021-5/202152118133933757.jpg',
+            //       isOwn: true,
+            //     }]
+            //   })
+            // }else {
+            //   this.setState({
+            //     dataSource: [...this.state.dataSource, {
+            //       message: text,
+            //       avatar: 'https://tupian.qqw21.com/article/UploadPic/2021-7/202171622301582153.jpg',
+            //       isOwn: false,
+            //     }]
+            //   })
+            // }
+
+            let chat: ChatInfo = {
+              id: new Date().getTime(),
+              user_id: this.user.no,
+              content: text,
+              date: new Date().getTime()+'',
+              group_id: 0
             }
+            userManager.sendChat(chat);
+
             setTimeout(() => {
               this._listRef.current?.scrollToEnd({animated: Platform.OS ==='ios' ? true : false});
             }, 100);

@@ -4,10 +4,11 @@ import logger from 'redux-logger';
 import testReducer from './reducers/TestReducer';
 import { userReducer } from './reducers/UserReducer';
 import { appStatusReducer } from './reducers/AppStatusReducer';
+import { friendReducer } from './reducers/FriendReducer';
 
 const middlewares = [thunk];
 if (process.env.NODE_ENV === 'development') {
-	// middlewares.push(logger);
+	middlewares.push(logger);
 }
 
 const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
@@ -15,7 +16,8 @@ const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
 const rootReducer = combineReducers({
   testReducer,
   userReducer,
-  appStatusReducer
+  appStatusReducer,
+  friendReducer
 });
 
 const store = createStoreWithMiddleware(rootReducer);

@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Color from '../../constant/Color';
 import { globalStyles } from '../../constant/Styles';
 import User from '../../dto/User';
+import userManager from '../../helper/manager/UserManager';
+import { QueryUtil } from '../../helper/utils/QueryUtil';
 import { sp } from '../../helper/utils/ScreenUtil';
 import AddFriendItem, { AddFriendItem_TYPE } from '../widget/AddFriendItem';
 import FriendItem from '../widget/FriendItem';
@@ -45,8 +47,9 @@ class AddFrientPage extends BasePage<{}> {
 			}
 			let user: User = {
 				avatar: '',
-				nickname: this.searchText,
-				number: '',
+				name: this.searchText,
+				no: new Date().getTime()+'',
+        // id: new Date().getTime()
 			}
 			this.setState({
 				isLoading: false,
@@ -83,7 +86,9 @@ class AddFrientPage extends BasePage<{}> {
 
 						{
 							dataSource.map((item: User) => {
-								return <AddFriendItem user={item} key={item.nickname} staus={AddFriendItem_TYPE.Add} />
+								return <AddFriendItem user={item} key={item.name} staus={AddFriendItem_TYPE.Add} addAction={()=>{
+                  userManager.addFriends(item);
+                }} />
 							})
 						}
 						{

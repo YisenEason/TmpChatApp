@@ -1,10 +1,15 @@
 import { StackNavigationOptions } from '@react-navigation/stack';
 import React, { RefObject } from 'react';
 import { Button, FlatList, Image, NativeModules, PanResponder, PanResponderInstance, Platform, SectionList, StatusBar, Text, TouchableOpacity, UIManager, View, ViewStyle } from "react-native";
+import { NativeStackNavigationOptions } from 'react-native-screens/lib/typescript/native-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { connect } from 'react-redux';
 import Color from '../../constant/Color';
 import { Frame } from '../../constant/Contants';
 import { globalStyles } from "../../constant/Styles";
+import { Group } from '../../dto/Group';
+import User from '../../dto/User';
+import { RootState } from '../../redux/Store';
 import FriendItem from '../widget/FriendItem';
 import PopupViewByALPage from '../widget/PopupViewByALPage';
 import SectionListIndexView from '../widget/SectionListIndexView';
@@ -26,12 +31,17 @@ const dataSource = [
   { title: 'z', data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
   { title: 'p', data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
 ];
-export default class AddressListPage extends BasePage<{}> {
+
+type Props = {
+  friends: Group[]
+}
+
+class AddressListPage extends BasePage<Props> {
 
   constructor(props: any) {
     super(props);
 
-    let navOptions: StackNavigationOptions = {
+    let navOptions: NativeStackNavigationOptions = {
       ...this.baseNavigationOptions,
       title: '通讯录',
       headerRight: this._headerRightBtn
@@ -43,9 +53,9 @@ export default class AddressListPage extends BasePage<{}> {
   componentDidMount() {
   }
 
-  getSectionListIndexDataSource(): string[] {
+  getSectionListIndexDataSource(friends: Group[]): string[] {
     let indexDataSource: string[] = [];
-    dataSource.map((item) => {
+    friends.map((item) => {
       indexDataSource.push(item.title);
     })
     return indexDataSource;
@@ -61,9 +71,14 @@ export default class AddressListPage extends BasePage<{}> {
     );
   }
 
-  _renderItem = ({ item, index }) => {
+  _renderItem = ({ item, index } : {item: User, index: number}) => {   
+     
     return (
-      <FriendItem name={item} avatar='' />
+      <FriendItem key={JSON.stringify(item)} user={item} onTap={()=>{
+        this.props.navigation.navigate('ChatPage', {
+          user: item
+        });
+      }} />
     );
   }
 
@@ -78,10 +93,10 @@ export default class AddressListPage extends BasePage<{}> {
   _renderListHeaderComponent = () => {
     return (
       <View>
-        <FriendItem user={{ nickname: '新的朋友' }} icon='person-add-outline' onTap={() => {
+        <FriendItem user={{ name: '新的朋友' }} icon='person-add-outline' onTap={() => {
           this.props.navigation.navigate('NewFriendPage');
         }} />
-        <FriendItem user={{ nickname: '群聊' }} icon='chatbubbles-outline' onTap={()=>{
+        <FriendItem user={{ name: '群聊' }} icon='chatbubbles-outline' onTap={()=>{
           this.props.navigation.navigate('ChatGroupListPage');
         }} />
       </View>
@@ -98,13 +113,13 @@ export default class AddressListPage extends BasePage<{}> {
         <SectionList
           showsVerticalScrollIndicator={false}
           ref={this.sectionListRef}
-          sections={dataSource}
+          sections={this.props.friends}
           renderItem={this._renderItem}
           keyExtractor={(item, index) => { return item + '' + index }}
           renderSectionHeader={this._renderSectionHeader}
           ListHeaderComponent={this._renderListHeaderComponent}
         ></SectionList>
-        <SectionListIndexView dataSource={this.getSectionListIndexDataSource()} style={{ zIndex: 999, position: 'absolute', width: 30, right: 0 }} onChange={(index) => {
+        <SectionListIndexView dataSource={this.getSectionListIndexDataSource(this.props.friends)} style={{ zIndex: 999, position: 'absolute', width: 30, right: 0 }} onChange={(index) => {
           try {
             this.sectionListRef.current?.scrollToLocation({ sectionIndex: index, animated: false, itemIndex: 0 })
           } catch (e) {
@@ -115,3 +130,9 @@ export default class AddressListPage extends BasePage<{}> {
     );
   }
 }
+
+export default connect((state: any)=>{
+  return {
+    friends: state.friendReducer.friends
+  }
+})(AddressListPage);

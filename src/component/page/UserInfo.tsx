@@ -1,11 +1,13 @@
 import { StackNavigationOptions } from '@react-navigation/stack';
 import React, { FC } from 'react';
 import { Alert, Button, Image, Text, TouchableOpacity, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
+import { NativeStackNavigationOptions } from 'react-native-screens/lib/typescript/native-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect, createSelectorHook, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Color from '../../constant/Color';
 import { globalStyles } from "../../constant/Styles";
+import User from '../../dto/User';
 import { showConfirmModal } from '../../helper/utils/ModalUtil';
 import { sp } from '../../helper/utils/ScreenUtil';
 import { RootState } from '../../redux/Store';
@@ -18,7 +20,7 @@ class UserInfo extends BasePage<{}> {
   constructor(props: any) {
     super(props);
 
-    let navOptions: StackNavigationOptions = {
+    let navOptions: NativeStackNavigationOptions = {
       ...this.baseNavigationOptions,
       headerShown: false
     }
@@ -69,7 +71,7 @@ export default UserInfo;
 
 const TopUserView = ({onPress}:{onPress: ()=>void}) => {
 
-  const { user } = useSelector((state: RootState) => (state.userReducer));
+  const { user }:{user: User} = useSelector((state: RootState) => (state.userReducer));
   
   return (
     <TouchableWithoutFeedback onPress={()=>{
@@ -78,8 +80,8 @@ const TopUserView = ({onPress}:{onPress: ()=>void}) => {
       <View style={{backgroundColor: Color.white, flexDirection: 'row', paddingTop: 80, paddingBottom: 20, alignItems: 'center', paddingLeft: 20, paddingRight: 20}}>
         <Image style={{height: 80, width: 80, borderRadius: 10, backgroundColor: Color._e6ece9}} source={{uri: user.avatar}} />
         <View style={{flex: 1, paddingHorizontal: 10}}>
-          <Text style={{fontWeight: 'bold', fontSize: sp(32), color: Color.default_fontColor}} numberOfLines={1}>{user.nickname}</Text>
-          <Text style={{marginTop: 10, color: Color.default_fontColor, fontSize: sp(28)}} numberOfLines={1}>编号：{user.number}</Text>
+          <Text style={{fontWeight: 'bold', fontSize: sp(32), color: Color.default_fontColor}} numberOfLines={1}>{user.name}</Text>
+          <Text style={{marginTop: 10, color: Color.default_fontColor, fontSize: sp(28)}} numberOfLines={1}>编号：{user.no}</Text>
         </View>
         <Icon name='chevron-forward-outline' size={20} color={Color.default_fontColor} />
       </View>

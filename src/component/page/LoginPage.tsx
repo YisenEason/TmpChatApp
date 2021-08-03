@@ -50,11 +50,11 @@ class LoginPage extends BasePage<Props> {
         isLoading: false
       })
       userManager.saveUser({
-        username: 'abc',
-        nickname: 'ccc',
-        number: 'ab12323cc',
+        name: 'abc',
+        no: 'ab12323cc',
         avatar: 'http://m.imeitou.com/uploads/allimg/2021060310/yiuviwkiqho-lp.jpg'
       });
+      userManager.fetchFriends();
     }, 1000);
   }
 

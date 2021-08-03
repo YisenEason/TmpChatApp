@@ -14,7 +14,7 @@ type Props = {
   disable?: boolean
 }
 
-const FriendItem: FC<Props> = ({ user = { nickname: '未知用户' }, onTap, icon, style, disable=false }) => {
+const FriendItem: FC<Props> = ({ user, onTap, icon, style, disable=false }) => {
   return (
     <TouchableOpacity onPress={onTap} style={style} disabled={disable}>
       <View style={[{ backgroundColor: Color.white, flexDirection: 'row', height: 55, alignItems: 'center' }]}>
@@ -30,7 +30,7 @@ const FriendItem: FC<Props> = ({ user = { nickname: '未知用户' }, onTap, ico
             <Image style={{ height: 40, width: 40, borderRadius: 5, backgroundColor: Color.default_divisionColor }} source={{ uri: user.avatar }} />
           }
         </View>
-        <Text style={{ color: Color.default_fontColor, fontSize: sp(28) }}>{user.nickname}</Text>
+        <Text style={{ color: Color.default_fontColor, fontSize: sp(28) }}>{user.name}</Text>
         <View style={{ position: 'absolute', bottom: 0, left: 72, width: '100%', backgroundColor: Color.default_divisionColor, height: 0.5 }} />
       </View>
     </TouchableOpacity>

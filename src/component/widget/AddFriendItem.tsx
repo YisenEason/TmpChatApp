@@ -13,8 +13,9 @@ export enum AddFriendItem_TYPE {
 
 const AddFriendItem: FC<{
 	staus?: AddFriendItem_TYPE,
-	user: User
-}> = ({ staus = AddFriendItem_TYPE.Exist, user }) => {
+	user: User,
+  addAction?: ()=>void
+}> = ({ staus = AddFriendItem_TYPE.Exist, user, addAction }) => {
 
 	return (
 		<View style={{ justifyContent: 'center' }}>
@@ -22,7 +23,7 @@ const AddFriendItem: FC<{
 			<View style={{ position: 'absolute', right: 20 }}>
 				{
 					staus === AddFriendItem_TYPE.Add &&
-					<TouchableOpacity >
+					<TouchableOpacity onPress={addAction}>
 						<View style={{ backgroundColor: Color.default_actionColor, paddingVertical: 10, paddingHorizontal: 15, borderRadius: 5 }}>
 							<Text style={{ color: Color.white }}>添加</Text>
 						</View>

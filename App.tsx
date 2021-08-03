@@ -19,14 +19,14 @@ export default class App extends React.Component {
 
   componentDidMount() {
 
-    AppState.addEventListener("change", (nextAppState)=>{
-      console.log(nextAppState);
-      if (nextAppState === 'active') {
-        WebSocketClient.getInstance().initWebSocket();
-      }else {
-        WebSocketClient.getInstance().close();
-      }
-    });
+    // AppState.addEventListener("change", (nextAppState)=>{
+    //   console.log(nextAppState);
+    //   if (nextAppState === 'active') {
+    //     WebSocketClient.getInstance().initWebSocket();
+    //   }else {
+    //     WebSocketClient.getInstance().close();
+    //   }
+    // });
   }
 
   componentWillUnmount() {

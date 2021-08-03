@@ -1,10 +1,10 @@
 
 class User {
 
-  username?: string;
-  nickname?: string;
-  number?: string;
-  avatar?: string;
+  id:number = 0;
+  name: string = '';
+  no: string = '';
+  avatar: string = '';
 
 }
 

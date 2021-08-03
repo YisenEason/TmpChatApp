@@ -2,10 +2,14 @@ import SQLiteStorage, {ResultSet, SQLError, SQLiteDatabase} from 'react-native-s
 SQLiteStorage.DEBUG(true);
 
 // 当前数据库
-var db: SQLiteDatabase;
+var db: SQLiteDatabase|null;
 
 
 const deleteDB = () => {
+  if (db) {
+    db.close();
+    db = null;
+  }
   SQLiteStorage.deleteDatabase({
     name: 'quickdb.db',
     location: 'default'
@@ -38,7 +42,7 @@ const initDB = () => {
 
 const createTable = (sql:string, callback?:(status:boolean, err?: any)=>void) => {
   console.log(`createTable is =${sql}`)
-  db.transaction((tx) => {
+  db?.transaction((tx) => {
     tx.executeSql(
       sql,
       [],
@@ -59,6 +63,74 @@ const createTable = (sql:string, callback?:(status:boolean, err?: any)=>void) =>
     })
 }
 
+const queryTable = (sql:string, params:any[], callback?:(results: any[], err?: any)=>void) => {
+  console.log(`queryTable is =${sql}`)
+  db?.transaction((tx) => {
+    tx.executeSql(
+      sql,
+      params,
+      (tx, res) => {
+        callback && callback(res.rows.raw());
+        console.log(`queryTable executeSql success`)
+      },
+      (err) => {
+        callback && callback([], err)
+        console.log('queryTable  executeSql error=',err)
+      })
+    },
+    (err) => {
+      console.log('queryTable  transaction error=',err)
+    },
+    () => {
+      console.log(`queryTable transaction success`)
+    })
+}
+
+const insertTable = (sql:string, params:any[], callback?:(status: boolean, err?: any)=>void) => {
+  console.log(`insertTable is =${sql}`)
+  db?.transaction((tx) => {
+    tx.executeSql(
+      sql,
+      params,
+      (res) => {
+        callback && callback(true);
+        console.log(`insertTable executeSql success`)
+      },
+      (err) => {
+        callback && callback(false, err)
+        console.log('insertTable  executeSql error=',err)
+      })
+    },
+    (err) => {
+      console.log('insertTable  transaction error=',err)
+    },
+    () => {
+      console.log(`insertTable transaction success`)
+    })
+}
+
+const delTable = (sql:string, callback?:(status: boolean, err?: any)=>void) => {
+  console.log(`delTable is =${sql}`)
+  db?.transaction((tx) => {
+    tx.executeSql(
+      sql,
+      [],
+      (res) => {
+        callback && callback(true);
+        console.log(`delTable executeSql success`)
+      },
+      (err) => {
+        callback && callback(false, err)
+        console.log('delTable  executeSql error=',err)
+      })
+    },
+    (err) => {
+      console.log('delTable  transaction error=',err)
+    },
+    () => {
+      console.log(`delTable transaction success`)
+    })
+}
 
 const openDB = () => {
   db = SQLiteStorage.openDatabase({
@@ -80,17 +152,26 @@ const initAllTable = () => {
   // 好友表
   createTable(`
     CREATE TABLE IF NOT EXISTS User(
-      id INTEGER PRIMARY KEY,
       name VARCHAR,
       avatar VARCHAR,
-      no VARCHAR
+      no VARCHAR PRIMARY KEY
     )
   `);
+
   // 聊天记录表, 记录所有聊天记录，包括单聊和群聊
+  createTable(`
+    CREATE TABLE IF NOT EXISTS Chat_History(
+      id INTEGER PRIMARY KEY,
+      user_id VARCHAR,
+      content VARCHAR,
+      date DATETIME,
+      group_id INTEGER
+    )
+  `);
   
   // 群聊表
   createTable(`
-    CREATE TABLE IF NOT EXISTS Group(
+    CREATE TABLE IF NOT EXISTS Groups(
       id INTEGER PRIMARY KEY,
       name VARCHAR
     )
@@ -100,9 +181,8 @@ const initAllTable = () => {
   createTable(`
     CREATE TABLE IF NOT EXISTS Group_User(
       id INTEGER PRIMARY KEY,
-      name VARCHAR,
-      avatar VARCHAR,
-      no VARCHAR
+      group_id VARCHAR,
+      user_id VARCHAR
     )
   `);
 }
@@ -112,7 +192,7 @@ const executeSQL = async (statement: string, params?: any[], callback?: (results
     openDB();
   }
   
-  db.transaction((tx)=>{
+  db?.transaction((tx)=>{
     tx.executeSql(statement, params, (tx, result)=>{
       console.log('执行成功', result.rows.raw());
       callback && callback(result.rows.raw())
@@ -128,5 +208,8 @@ export const SqlUtil = {
   deleteDB,
   initAllTable,
   initDB,
-  createTable
+  createTable,
+  queryTable,
+  insertTable,
+  delTable
 }
